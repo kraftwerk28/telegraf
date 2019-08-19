@@ -231,7 +231,10 @@ class ApiClient {
 
     const payload = Object.keys(data)
       .filter((key) => typeof data[key] !== 'undefined' && data[key] !== null)
-      .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {})
+      .reduce((acc, key) => {
+        acc[key] = data[key]
+        return acc
+      }, {})
 
     if (options.webhookReply && response && !responseEnd && !WEBHOOK_BLACKLIST.includes(method)) {
       debug('Call via webhook', method, payload)
